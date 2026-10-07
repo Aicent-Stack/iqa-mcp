@@ -8,13 +8,19 @@ version = "0.1.0"
 description = "IQA attestation primitives (derived intent addressing + AE-128 envelope verification) as Model Context Protocol tools. Offline, fail-closed, stateless."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "Apache-2.0" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 authors = [{ name = "RTTP & IQA Organization" }]
 keywords = ["mcp", "iqa", "rttp", "attestation", "agents", "offline"]
 dependencies = [
   "iqa-org>=1.3.1",
   "mcp>=2.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Aicent-Stack/iqa-mcp"
+Repository = "https://github.com/Aicent-Stack/iqa-mcp"
+"Public record" = "https://iqa.org/MCP/"
 
 [project.scripts]
 iqa-mcp = "server:mcp.run"
