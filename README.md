@@ -82,4 +82,12 @@ placement is a pending decision. The underlying schemes are
 `iqa-org` 1.3.1 (four registries) with the merged Internet-Draft
 `draft-li-rttp-iqa-addressing-00` in Independent Submission review.
 
-Public record: <https://iqa.org/brief/>
+## Public record
+
+Everything this tool wraps is public and checkable — no asking us:
+
+- **Public record, dated**: <https://iqa.org/brief/>
+- **Live demos** — the audit chain this tool joins: <https://iqa.org/demo/compare/> · <https://iqa.org/demo/delegation/>
+- **Whitepaper**: <https://iqa.org/whitepaper/> (also at [rttp.com/whitepaper](https://rttp.com/whitepaper/))
+- **Internet-Draft**: [draft-li-rttp-iqa-addressing](https://datatracker.ietf.org/doc/draft-li-rttp-iqa-addressing/) — Independent Submission, in review
+- **The library this server wraps**: [iqa-org 1.3.1 on PyPI](https://pypi.org/project/iqa-org/1.3.1/) — four registries, byte-exact vectors, offline self-test
