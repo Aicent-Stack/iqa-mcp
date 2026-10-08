@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "iqa-mcp"
-version = "0.1.0"
+version = "1.0.1"
 description = "IQA attestation primitives (derived intent addressing + AE-128 envelope verification) as Model Context Protocol tools. Offline, fail-closed, stateless."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,4 +26,4 @@ Repository = "https://github.com/Aicent-Stack/iqa-mcp"
 iqa-mcp = "server:mcp.run"
 
 [tool.setuptools]
-py-modules = ["server"]
+py-modules = ["server", "test_mcp"]
