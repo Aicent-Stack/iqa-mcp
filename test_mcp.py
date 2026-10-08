@@ -13,12 +13,42 @@ Seven assertions:
 
 import asyncio
 import json
+import os
+import shutil
 import sys
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-PARAMS = StdioServerParameters(command=sys.executable, args=["server.py"])
+
+def _resolve_params() -> StdioServerParameters:
+    """Locate the iqa-mcp server without assuming a checkout layout.
+
+    Order: IQA_MCP_CMD override -> ./server.py (source checkout) ->
+    the installed `iqa-mcp` console script (PyPI layout, venv or PATH).
+    """
+    override = os.environ.get("IQA_MCP_CMD")
+    if override:
+        return StdioServerParameters(command=override)
+    if os.path.exists("server.py"):
+        return StdioServerParameters(command=sys.executable,
+                                     args=["server.py"])
+    here = os.path.dirname(sys.executable)
+    for cand in (os.path.join(here, "iqa-mcp.exe"),
+                 os.path.join(here, "iqa-mcp")):
+        if os.path.isfile(cand):
+            return StdioServerParameters(command=cand)
+    exe = shutil.which("iqa-mcp")
+    if exe:
+        return StdioServerParameters(command=exe)
+    raise SystemExit(
+        "cannot locate the iqa-mcp server: no ./server.py here and no "
+        "iqa-mcp console script on PATH — run from the source checkout "
+        "or `pip install iqa-mcp`"
+    )
+
+
+PARAMS = _resolve_params()
 
 
 async def main() -> int:
