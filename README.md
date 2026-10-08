@@ -1,5 +1,9 @@
 # iqa-mcp
 
+[![PyPI](https://img.shields.io/pypi/v/iqa-mcp)](https://pypi.org/project/iqa-mcp/)
+[![License](https://img.shields.io/pypi/l/iqa-mcp)](https://github.com/Aicent-Stack/iqa-mcp/blob/main/LICENSE)
+[![self-test](https://github.com/Aicent-Stack/iqa-mcp/actions/workflows/self-test.yml/badge.svg)](https://github.com/Aicent-Stack/iqa-mcp/actions/workflows/self-test.yml)
+
 The IQA attestation primitives — derived intent addressing and AE-128
 envelope verification — exposed as Model Context Protocol tools, so any
 MCP agent (Claude Desktop, Cline, your own client, an Uber-style MCP
@@ -10,14 +14,25 @@ implementation. No network. No accounts. No key storage. No state.
 
 **PyPI** · [iqa-mcp 0.1.0](https://pypi.org/project/iqa-mcp/) · Apache-2.0
 **Spec** · [draft-li-rttp-iqa-addressing](https://datatracker.ietf.org/doc/draft-li-rttp-iqa-addressing/) — Independent Submission, in review
+**Landing page** · [iqa.org/MCP/](https://iqa.org/MCP/)
 **Listings** · [ModelScope MCP 广场](https://modelscope.cn/mcp/servers/AicentStack/iqa-mcp)
 
 ---
 
+## Why
+
+Agent platforms are converging on MCP as the tool-calling layer, at
+industrial scale. What none of them standardize is trust semantics:
+what intent is being addressed, and whether the counterparty holds
+standing — verifiable without a network call. These four tools make
+that layer native to any MCP agent.
+
 ## Install
 
+Requires Python ≥ 3.11.
+
 ```bash
-# from PyPI
+# from PyPI — installs the `iqa-mcp` console command
 pip install iqa-mcp
 
 # or run from source
@@ -31,12 +46,14 @@ MCP client configuration (Claude Desktop / Cline style):
 {
   "mcpServers": {
     "iqa": {
-      "command": "python",
-      "args": ["/path/to/server.py"]
+      "command": "iqa-mcp"
     }
   }
 }
 ```
+
+(From source, use `"command": "python", "args": ["/path/to/server.py"]`
+instead.)
 
 ---
 
@@ -47,9 +64,20 @@ MCP client configuration (Claude Desktop / Cline style):
 | `derive_route_shard` | authority string | `SHA-256(authority)[0:16]` hex — the derived, action-independent intent address | no |
 | `parse_envelope` | AE-128 frame hex | structural decode: version, lease, shard, organ, nonce, standing — fails closed on every layout rule | no |
 | `verify_envelope` | frame hex + organ key | full verification: constant-time HMAC-SHA256 over the whole 128-byte frame (attestation zeroed) + lease check. REJECT is a result, not an error | yes (caller-supplied) |
-| `published_vector` | — | the published AE128-VECTOR-1 (authority, test key, frame hex) for byte-for-byte self-test | — |
+| `published_vector` | — | the published AE128-VECTOR-1 (authority, test key, frame hex — see [iqa-org](https://github.com/Aicent-Stack/iqa-org)) for byte-for-byte self-test | — |
 
----
+## Try it in thirty seconds
+
+```text
+published_vector            -> AE128-VECTOR-1: authority + test key + frame hex
+parse_envelope(frame)       -> standing radiant · nonce 1 · lease unexpired
+verify_envelope(frame, key) -> PASS
+flip one byte of standing   -> REJECT (HMAC mismatch)
+```
+
+That last line is the point: tampering is not detected by anyone
+watching — the frame simply stops verifying, offline, for any verifier,
+forever.
 
 ## Self-test
 
@@ -64,9 +92,6 @@ python test_mcp.py
 # [PASS] 7 · malformed hex      -> REJECT
 # ALL 7/7 PASS
 ```
-
-Test 6 is the point: flip one byte of the standing field and the frame
-dies — attestation does not verify. Fail-closed, over the wire.
 
 ---
 
@@ -93,7 +118,9 @@ marketing:
 - **Not a delegation scheme.** v1.3.x intentionally specifies no
   delegation semantics — see the draft's honest-boundary notes.
 - **Not a key custodian.** The organ key never touches this server's
-  state; verification is caller-supplied, per call.
+  state; verification is caller-supplied, per call. Never pass a
+  production organ key through a host you do not control — whoever sees
+  the key holds the verification power.
 - **Not a benchmark.** The demos at iqa.org execute real WebCrypto in
   the browser; this server wraps the same published primitives.
 
@@ -124,6 +151,7 @@ marketing:
 
 Everything this tool wraps is public and checkable — no asking us:
 
+- **Landing page**: <https://iqa.org/MCP/>
 - **Public record, dated**: <https://iqa.org/brief/>
 - **Live demos — the audit chain this tool joins**:
   <https://iqa.org/demo/compare/> · <https://iqa.org/demo/delegation/>
