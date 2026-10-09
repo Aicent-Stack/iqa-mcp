@@ -34,10 +34,16 @@ Requires Python ≥ 3.11.
 # from PyPI — installs the `iqa-mcp` console command
 pip install iqa-mcp
 
+# launcher equivalents — same `iqa-mcp` command, they fetch and wrap the Python package above
+npm install -g iqa-mcp        # or run once: npx iqa-mcp
+cargo install iqa-mcp
+
 # or run from source
 pip install "iqa-org>=1.3.1" "mcp>=2"
 python server.py            # stdio transport
 ```
+
+All three install paths end at the same `iqa-mcp` command; the MCP client configuration below works unchanged for any of them.
 
 MCP client configuration (Claude Desktop / Cline style):
 
