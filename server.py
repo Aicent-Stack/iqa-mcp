@@ -28,6 +28,7 @@ Run
 import json
 
 from mcp.server.mcpserver import MCPServer
+from mcp.types import ToolAnnotations
 
 from iqa import envelope
 from iqa.envelope import (
@@ -45,6 +46,17 @@ mcp = MCPServer(
     "iqa",
     title="iqa attestation tools",
     description="Offline, fail-closed IQA attestation primitives: derived intent addressing and AE-128 envelope verification, wrapping the published iqa-org 1.3.1 reference implementation.",
+)
+
+# Every tool here is pure local computation: no environment mutation, no
+# network, no external entities, deterministic output. One shared annotation
+# block states that contract to MCP clients and directories in machine-
+# readable form (MCP spec: tool annotations).
+_ANN = ToolAnnotations(
+    readOnlyHint=True,
+    destructiveHint=False,
+    idempotentHint=True,
+    openWorldHint=False,
 )
 
 
@@ -66,7 +78,7 @@ def _frame_json(frame: dict) -> str:
     return json.dumps(out, indent=2)
 
 
-@mcp.tool(description="Derive the ROUTE_SHARD / intent shard for an authority: SHA-256 of the exact authority string, first 16 bytes, lowercase hex. Deterministic, offline, action-independent (SPEC sec. 3). No lookup, no registry, no network call.")
+@mcp.tool(annotations=_ANN, description="Derive the ROUTE_SHARD / intent shard for an authority: SHA-256 of the exact authority string, first 16 bytes, lowercase hex. Deterministic, offline, action-independent (SPEC sec. 3). No lookup, no registry, no network call.")
 def derive_route_shard(authority: str) -> str:
     """Derive the ROUTE_SHARD / intent shard for an authority."""
     try:
@@ -75,7 +87,7 @@ def derive_route_shard(authority: str) -> str:
         return json.dumps({"ok": False, "reject": str(exc)})
 
 
-@mcp.tool(description="Structural decode of one AE-128 attestation envelope (128 bytes, hex). No organ key needed. Fails closed on every layout rule of the companion draft sec. 2/sec. 4 -- malformed input is never normalised into a partial result.")
+@mcp.tool(annotations=_ANN, description="Structural decode of one AE-128 attestation envelope (128 bytes, hex). No organ key needed. Fails closed on every layout rule of the companion draft sec. 2/sec. 4 -- malformed input is never normalised into a partial result.")
 def parse_envelope(envelope_hex: str) -> str:
     """Structural decode of one AE-128 attestation envelope (128 bytes, hex). No organ key needed. Fails closed on every layout rule of the companion draft sec. 2/sec. 4 -- malformed input is never normalised into a partial result."""
     try:
@@ -85,7 +97,7 @@ def parse_envelope(envelope_hex: str) -> str:
     return json.dumps({"ok": True, "frame": json.loads(_frame_json(frame))}, indent=2)
 
 
-@mcp.tool(description="Full AE-128 verification (companion draft sec. 4): constant-time HMAC-SHA256 over the whole 128-byte frame with the attestation field zeroed, plus the optional lease check. organ_key is the organ's shared test/deployment key (this server is stateless and stores nothing). REJECT is a result, not an error: a flipped byte anywhere breaks the MAC.")
+@mcp.tool(annotations=_ANN, description="Full AE-128 verification (companion draft sec. 4): constant-time HMAC-SHA256 over the whole 128-byte frame with the attestation field zeroed, plus the optional lease check. organ_key is the organ's shared test/deployment key (this server is stateless and stores nothing). REJECT is a result, not an error: a flipped byte anywhere breaks the MAC.")
 def verify_envelope(envelope_hex: str, organ_key: str, now=None, check_lease: bool = True) -> str:
     """Full AE-128 verification (companion draft sec. 4): constant-time HMAC-SHA256 over the whole 128-byte frame with the attestation field zeroed, plus the optional lease check. organ_key is the organ's shared test/deployment key (this server is stateless and stores nothing). REJECT is a result, not an error: a flipped byte anywhere breaks the MAC."""
     try:
@@ -104,7 +116,7 @@ def verify_envelope(envelope_hex: str, organ_key: str, now=None, check_lease: bo
     return json.dumps({"ok": True, "reason": reason, "frame": out}, indent=2)
 
 
-@mcp.tool(description="Return AE128-VECTOR-1, the published conformance vector (companion draft sec. 6): the example authority, the documented test organ key, the lease, and the full 128-byte frame as hex. Feed these into verify_envelope and you must get [PASS] -- byte for byte, offline.")
+@mcp.tool(annotations=_ANN, description="Return AE128-VECTOR-1, the published conformance vector (companion draft sec. 6): the example authority, the documented test organ key, the lease, and the full 128-byte frame as hex. Feed these into verify_envelope and you must get [PASS] -- byte for byte, offline.")
 def published_vector() -> str:
     """Return AE128-VECTOR-1, the published conformance vector (companion draft sec. 6): the example authority, the documented test organ key, the lease, and the full 128-byte frame as hex. Feed these into verify_envelope and you must get [PASS] -- byte for byte, offline."""
     return json.dumps({
