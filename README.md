@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/iqa-mcp)](https://pypi.org/project/iqa-mcp/)
 [![License](https://img.shields.io/pypi/l/iqa-mcp)](https://github.com/Aicent-Stack/iqa-mcp/blob/main/LICENSE)
 [![self-test](https://github.com/Aicent-Stack/iqa-mcp/actions/workflows/self-test.yml/badge.svg)](https://github.com/Aicent-Stack/iqa-mcp/actions/workflows/self-test.yml)
-[![M8ven Score](https://m8ven.ai/badge/mcp/aicent-stack-iqa-mcp-hro699?v=0faac40bf48ecbcbd1b7b4f4397b16bd)](https://m8ven.ai/mcp/aicent-stack-iqa-mcp-hro699?s=readme)
+[![M8ven Score](https://m8ven.ai/badge/mcp/aicent-stack/iqa-mcp)](https://m8ven.ai/mcp/aicent-stack/iqa-mcp?s=readme)
 
 The IQA attestation primitives — derived intent addressing and AE-128
 envelope verification — exposed as Model Context Protocol tools, so any
