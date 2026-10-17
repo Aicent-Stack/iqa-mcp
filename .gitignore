@@ -6,3 +6,6 @@ dist/
 .venv/
 venv/
 .mcp.json
+
+# local snapshot of GitHub Releases metadata & assets (sync run 2026-10-16)
+_releases/
