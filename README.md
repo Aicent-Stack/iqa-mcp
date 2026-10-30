@@ -174,6 +174,36 @@ Everything this tool wraps is public and checkable — no asking us:
 
 ---
 
+## Status update — revision -01 (2026-10-30)
+
+The specification reference above is now:
+
+> **`draft-li-rttp-iqa-addressing` — revision -01** (34 pp.,
+> 2026-10-27), Independent Submission, in review:
+> https://datatracker.ietf.org/doc/draft-li-rttp-iqa-addressing/
+
+Two -01 sections map directly onto these tools:
+
+* **§6 — the trust lease.** `verify_envelope` performs its lease check
+  against the verifier's own clock; deployments use 120 seconds,
+  configurable. An expired lease is a REJECT result — fail-closed, in
+  line with the section's normative rule that an expired answer MUST be
+  refused.
+* **§8 — the closed refusal vocabulary with grant references.**
+  REJECT results are asked to surface the reason as one of the five
+  closed-set values (`evidence_binding_mismatch`, `evidence_expired`,
+  `authority_not_determined`, `authority_revoked`,
+  `operation_not_permitted`) plus a grant reference, so that agents
+  across different MCP clients see the same refusal words for the same
+  failure.
+* The attestation envelope these tools parse and verify is specified as
+  a normative wire format in **§7** of the I-D; `parse_envelope` and
+  `verify_envelope` implement exactly that layout (fixed offsets, HMAC
+  over the whole frame with the attestation field zeroed).
+
+Nothing about the tools, their inputs, or their self-test output
+changes; this is a specification-pointer update only.
+
 ## License
 
 Apache-2.0 — © RTTP & IQA Organization
