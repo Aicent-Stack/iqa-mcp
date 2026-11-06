@@ -174,15 +174,15 @@ Everything this tool wraps is public and checkable — no asking us:
 
 ---
 
-## Status update — revision -01 (2026-10-30)
+## Status update — revision -02 (2026-11-01)
 
 The specification reference above is now:
 
-> **`draft-li-rttp-iqa-addressing` — revision -01** (34 pp.,
-> 2026-10-27), Independent Submission, in review:
+> **`draft-li-rttp-iqa-addressing` — revision -02** (40 pp.,
+> 2026-11-01), Independent Submission, in review:
 > https://datatracker.ietf.org/doc/draft-li-rttp-iqa-addressing/
 
-Two -01 sections map directly onto these tools:
+Three -02 sections map directly onto these tools:
 
 * **§6 — the trust lease.** `verify_envelope` performs its lease check
   against the verifier's own clock; deployments use 120 seconds,
