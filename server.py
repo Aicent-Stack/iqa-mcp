@@ -1,7 +1,7 @@
 """iqa-mcp -- the IQA attestation primitives, exposed as MCP tools.
 
 A thin, stateless wrapper around the published ``iqa-org`` reference
-implementation (v1.3.1). Every tool runs offline: no network, no
+implementation (v1.3.2). Every tool runs offline: no network, no
 accounts, no key storage. Fail-closed: malformed input is a REJECT
 result, never a normalised partial answer.
 
@@ -45,7 +45,7 @@ from iqa.envelope import (
 mcp = MCPServer(
     "iqa",
     title="iqa attestation tools",
-    description="Offline, fail-closed IQA attestation primitives: derived intent addressing and AE-128 envelope verification, wrapping the published iqa-org 1.3.1 reference implementation.",
+    description="Offline, fail-closed IQA attestation primitives: derived intent addressing and AE-128 envelope verification, wrapping the published iqa-org 1.3.2 reference implementation.",
 )
 
 # Every tool here is pure local computation: no environment mutation, no

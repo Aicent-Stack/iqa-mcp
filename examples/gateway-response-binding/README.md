@@ -90,7 +90,7 @@ envelope spec — archived seals use `check_freshness=False` instead).
 
 ## Provenance
 
-- Envelope API: `iqa-org` 1.3.1 — [PyPI](https://pypi.org/project/iqa-org/) ·
+- Envelope API: `iqa-org` 1.3.2 — [PyPI](https://pypi.org/project/iqa-org/) ·
   [npm](https://www.npmjs.com/package/@aicent/iqa) ·
   [crates.io](https://crates.io/crates/iqa-org)
 - Specification: [draft-li-rttp-iqa-addressing](https://datatracker.ietf.org/doc/draft-li-rttp-iqa-addressing/)

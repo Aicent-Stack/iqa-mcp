@@ -10,7 +10,7 @@ envelope verification — exposed as Model Context Protocol tools, so any
 MCP agent (Claude Desktop, Cline, your own client, an Uber-style MCP
 Gateway) can verify trust offline, fail-closed.
 
-A thin, stateless wrapper around the published `iqa-org 1.3.1` reference
+A thin, stateless wrapper around the published `iqa-org 1.3.2` reference
 implementation. No network. No accounts. No key storage. No state.
 
 **PyPI** · [iqa-mcp](https://pypi.org/project/iqa-mcp/) · Apache-2.0
@@ -40,7 +40,7 @@ npm install -g iqa-mcp        # or run once: npx iqa-mcp
 cargo install iqa-mcp
 
 # or run from source
-pip install "iqa-org>=1.3.1" "mcp>=2"
+pip install "iqa-org>=1.3.2" "mcp>=2"
 python server.py            # stdio transport
 ```
 
@@ -142,7 +142,7 @@ marketing:
   current version in the badge above.
 - **Transport**: stdio. A hosted streamable-HTTP endpoint is under
   consideration; the tools are stateless, so hosting adds no custody.
-- **Underlying schemes**: `iqa-org 1.3.1` (PyPI / npm / crates.io — four
+- **Underlying schemes**: `iqa-org 1.3.2` (PyPI / npm / crates.io — four
   registries, byte-exact vectors, offline self-test).
 - **Specification**: `draft-li-rttp-iqa-addressing` — Independent
   Submission, in review.
@@ -169,7 +169,7 @@ Everything this tool wraps is public and checkable — no asking us:
 - **Whitepaper**: <https://iqa.org/whitepaper/> (also at rttp.com/whitepaper)
 - **Internet-Draft**: draft-li-rttp-iqa-addressing — Independent
   Submission, in review
-- **The library this server wraps**: iqa-org 1.3.1 on PyPI — four
+- **The library this server wraps**: iqa-org 1.3.2 on PyPI — four
   registries, byte-exact vectors, offline self-test
 
 ---
