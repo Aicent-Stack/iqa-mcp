@@ -140,8 +140,11 @@ marketing:
 
 - **Published on PyPI**: <https://pypi.org/project/iqa-mcp/> —
   current version in the badge above.
-- **Transport**: stdio. A hosted streamable-HTTP endpoint is under
-  consideration; the tools are stateless, so hosting adds no custody.
+- **Transport**: stdio, plus a hosted streamable-HTTP endpoint at
+  <https://mcp.iqa.org/> (MCP server URL: `https://mcp.iqa.org/mcp` —
+  stateless, rate-limited, no session, no keys stored; landing page:
+  <https://mcp.iqa.org/>). The tools are stateless, so hosting adds
+  no custody.
 - **Underlying schemes**: `iqa-org 1.3.2` (PyPI / npm / crates.io — four
   registries, byte-exact vectors, offline self-test).
 - **Specification**: `draft-li-rttp-iqa-addressing` — Independent
